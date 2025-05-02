@@ -20,14 +20,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.multcult.indigiplace.model.Product
 import com.multcult.indigiplace.viewmodel.ProductViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController, viewModel: ProductViewModel) {
+fun HomeScreen(
+    navController: NavController,
+    viewModel: ProductViewModel
+) {
+    HomeScreenContent(
+        productList = viewModel.productList,
+        onProductClick = { product -> navController.navigate("details/${product.id}") },
+        onAddClick = { navController.navigate("add") }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreenContent(
+    productList: List<Product>,
+    onProductClick: (Product) -> Unit,
+    onAddClick: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -40,56 +56,76 @@ fun HomeScreen(navController: NavController, viewModel: ProductViewModel) {
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("add") }) {
+            FloatingActionButton(onClick = onAddClick) {
                 Text("+")
             }
         }
-
-    ) { innerPadding ->  // Captura o content padding
-        LazyColumn(
-            contentPadding = innerPadding,  // Aplica o padding do Scaffold
-            modifier = Modifier.padding(horizontal = 16.dp)  // Padding lateral adicional, se quiser
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
         ) {
-            items(viewModel.productList.size) { index ->
-                val product = viewModel.productList[index]
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                        .clickable { navController.navigate("details/${product.id}") }
-                ) {
-                    Column(Modifier.padding(8.dp)) {
-                        Image(
-                            painter = rememberAsyncImagePainter(product.imageUrl),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(50.dp)
-                        )
-                        Text(product.title, style = MaterialTheme.typography.titleMedium)
-                        Text("R$ ${product.price}")
-                        Text(product.category)
+            BannerSection()
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+            ) {
+                items(productList.size) { index ->
+                    val product = productList[index]
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                            .clickable { onProductClick(product) }
+                    ) {
+                        Column(Modifier.padding(8.dp)) {
+                            Image(
+                                painter = rememberAsyncImagePainter(product.imageUrl),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(100.dp)
+                            )
+                            Text(product.title, style = MaterialTheme.typography.titleMedium)
+                            Text("R$ ${product.price}")
+                            Text(product.category)
+                        }
                     }
                 }
             }
         }
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    val fakeProducts = listOf(
-        Product(1, "Colar", 100.0, "Arte", "Feito à mão", "https://www.crefito8.gov.br/portal/images/phocagallery/galeria2/thumbs/phoca_thumb_l_image04_grd.png"),
-        Product(2, "Colar", 50.0, "Acessório", "Colar indígena", "https://via.placeholder.com/150")
-    )
 
-    val fakeViewModel = object : ProductViewModel() {
-        init {
-            productList.addAll(fakeProducts)
+@Composable
+fun BannerSection() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFDDEBF7))
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text("Bem-Vindo", style = MaterialTheme.typography.titleLarge)
+            Text("Encontre produtos e apoie os povos originários comprando produtos autênticos e de qualidade.")
         }
     }
+}
 
-    val fakeNavController = rememberNavController()
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenContentPreview() {
+    val fakeProducts = listOf(
+        Product(1, "Colar", 100.0, "Arte", "Feito à mão", "https://via.placeholder.com/150"),
+        Product(2, "Pulseira", 50.0, "Acessório", "Pulseira indígena", "https://via.placeholder.com/150")
+    )
 
-    HomeScreen(navController = fakeNavController, viewModel = fakeViewModel)
+    HomeScreenContent(
+        productList = fakeProducts,
+        onProductClick = {},
+        onAddClick = {}
+    )
 }
