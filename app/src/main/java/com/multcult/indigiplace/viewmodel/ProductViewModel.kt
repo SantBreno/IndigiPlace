@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.multcult.indigiplace.model.Product
 
-class ProductViewModel : ViewModel() {
+open class ProductViewModel : ViewModel() {
     private var nextId = 1
     val productList = mutableStateListOf<Product>()
 
@@ -16,3 +16,24 @@ class ProductViewModel : ViewModel() {
         return productList.find { it.id == id }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
