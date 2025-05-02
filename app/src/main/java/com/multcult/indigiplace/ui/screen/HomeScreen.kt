@@ -10,10 +10,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -26,12 +29,22 @@ import com.multcult.indigiplace.viewmodel.ProductViewModel
 @Composable
 fun HomeScreen(navController: NavController, viewModel: ProductViewModel) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Mercado Indígena") }) },
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("IndigiPlace", color = Color.White, fontWeight = FontWeight.Bold)
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = { navController.navigate("add") }) {
                 Text("+")
             }
         }
+
     ) { innerPadding ->  // Captura o content padding
         LazyColumn(
             contentPadding = innerPadding,  // Aplica o padding do Scaffold
