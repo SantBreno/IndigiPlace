@@ -12,7 +12,16 @@ import com.multcult.indigiplace.viewmodel.ProductViewModel
 fun AppNavigation(navController: NavHostController) {  // Removido 'modifier'
     val productViewModel: ProductViewModel = viewModel()
 
-    NavHost(navController, startDestination = "home") {
+    NavHost(navController, startDestination = "sign_in") {
+        composable("sign_in") {
+            SignInScreen(
+                onSignInSuccess = { navController.navigate("home") },
+                onSignUpClick = { navController.navigate("sign_up") }
+            )
+        }
+        composable("sign_up") {
+            SignUpScreen(onSignUpSuccess = { navController.navigate("sign_in") })
+        }
         composable("home") {
             HomeScreen(navController, productViewModel)
         }
