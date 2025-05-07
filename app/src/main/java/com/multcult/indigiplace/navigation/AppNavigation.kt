@@ -1,19 +1,30 @@
 package com.multcult.indigiplace.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.multcult.indigiplace.ui.screen.*
-import com.multcult.indigiplace.viewmodel.ProductViewModel
+import com.multcult.indigiplace.viewmodel.AuthViewModel
 
 @Composable
-fun AppNavigation(navController: NavHostController) {  // Removido 'modifier'
-    val productViewModel: ProductViewModel = viewModel()
+fun AppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
+    val navController = rememberNavController()
+    /*val productViewModel: ProductViewModel = viewModel()*/
 
-    NavHost(navController, startDestination = "sign_in") {
+    NavHost(navController = navController, startDestination = "sign_in", builder = {
         composable("sign_in") {
+            SignInScreen(modifier, navController)
+        }
+        composable("sign_up") {
+            SignUpScreen(modifier, navController, authViewModel)
+        }
+        composable("home") {
+            HomeScreen()
+        }
+    })
+        /*composable("sign_in") {
             SignInScreen(
                 onSignInSuccess = { navController.navigate("home") },
                 onSignUpClick = { navController.navigate("sign_up") }
@@ -33,6 +44,6 @@ fun AppNavigation(navController: NavHostController) {  // Removido 'modifier'
         }
         composable("add") {
             AddProductScreen(navController, productViewModel)
-        }
-    }
+        }*/
+
 }
