@@ -15,8 +15,8 @@ fun AppNavigation(modifier : Modifier = Modifier, authViewModel: AuthViewModel) 
     val navController = rememberNavController()
     val productViewModel: ProductViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = "signin", builder = {
-        composable("signin") {
+    NavHost(navController = navController, startDestination = "sign_in", builder = {
+        composable("sign_in") {
             SignInScreen(modifier, navController, authViewModel)
         }
         composable("sign_up") {

@@ -57,6 +57,7 @@ fun SignInScreen(modifier : Modifier = Modifier, navController: NavController, a
         Spacer(modifier = Modifier.height(8.dp))
 
         TextButton(onClick = {
+            navController.navigate("sign_up")
         }) {
             Text(text = "Não tem uma conta? Cadastre-se")
         }
