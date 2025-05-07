@@ -1,29 +1,29 @@
 package com.multcult.indigiplace.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.multcult.indigiplace.ui.screen.*
+import com.multcult.indigiplace.viewmodel.AuthViewModel
 import com.multcult.indigiplace.viewmodel.ProductViewModel
 
 @Composable
-fun AppNavigation(navController: NavHostController) {  // Removido 'modifier'
+fun AppNavigation(modifier : Modifier = Modifier, authViewModel: AuthViewModel) {
+    val navController = rememberNavController()
     val productViewModel: ProductViewModel = viewModel()
 
-    NavHost(navController, startDestination = "sign_in") {
-        composable("sign_in") {
-            SignInScreen(
-                onSignInSuccess = { navController.navigate("home") },
-                onSignUpClick = { navController.navigate("sign_up") }
-            )
+    NavHost(navController = navController, startDestination = "signin", builder = {
+        composable("signin") {
+            SignInScreen(modifier, navController, authViewModel)
         }
         composable("sign_up") {
-            SignUpScreen(onSignUpSuccess = { navController.navigate("sign_in") })
+            SignUpScreen(modifier, navController, authViewModel)
         }
         composable("home") {
-            HomeScreen(navController, productViewModel)
+            HomeScreen(modifier, navController, authViewModel)
         }
         composable("details/{productId}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
@@ -34,5 +34,6 @@ fun AppNavigation(navController: NavHostController) {  // Removido 'modifier'
         composable("add") {
             AddProductScreen(navController, productViewModel)
         }
-    }
+    } )
 }
+
