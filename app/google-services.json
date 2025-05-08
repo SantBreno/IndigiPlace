@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "447502268027",
+    "project_id": "indigiplace",
+    "storage_bucket": "indigiplace.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447502268027:android:3cd5ff1c852401bba6d4de",
+        "android_client_info": {
+          "package_name": "com.multcult.indigiplace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrFt8yLG3zEdP4_iiu2C-AxLW84ZcfG3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
