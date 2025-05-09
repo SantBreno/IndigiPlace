@@ -17,15 +17,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.multcult.indigiplace.viewmodel.AuthViewModel
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun SignUpScreen(modifier : Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val authState = authViewModel.authState.observeAsState()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -55,7 +58,7 @@ fun SignUpScreen(modifier : Modifier = Modifier, navController: NavController, a
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = {
-
+            authViewModel.signup(email, password)
         }) {
             Text(text = "Criar Conta")
         }
