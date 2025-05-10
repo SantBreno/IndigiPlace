@@ -14,21 +14,21 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.multcult.indigiplace.viewmodel.AuthViewModel
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.multcult.indigiplace.viewmodel.AuthState
+import com.multcult.indigiplace.viewmodel.AuthViewModel
 
 @Composable
-fun SignUpScreen(modifier : Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel){
+fun SignUpScreen( navController: NavController, authViewModel: AuthViewModel){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 

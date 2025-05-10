@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation (libs.androidx.runtime.livedata)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

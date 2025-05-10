@@ -17,13 +17,13 @@ fun AppNavigation(modifier : Modifier = Modifier, authViewModel: AuthViewModel) 
 
     NavHost(navController = navController, startDestination = "sign_in", builder = {
         composable("sign_in") {
-            SignInScreen(modifier, navController, authViewModel)
+            SignInScreen(navController, authViewModel)
         }
         composable("sign_up") {
-            SignUpScreen(modifier, navController, authViewModel)
+            SignUpScreen(navController, authViewModel)
         }
         composable("home") {
-            HomeScreen(modifier, navController, authViewModel)
+            HomeScreen(modifier, navController, productViewModel)
         }
         composable("details/{productId}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("productId")?.toIntOrNull()

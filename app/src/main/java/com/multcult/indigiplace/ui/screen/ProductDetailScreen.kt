@@ -139,7 +139,7 @@ fun ProductDetailScreenPreview() {
         title = "Cocar Tradicional",
         price = 150.0,
         category = "Artesanato",
-        description = "Feito à mão por artesãos indígenas usando penas naturais e materiais sustentáveis.",
+        description = "COCAR MUITO MASSA",
         imageUrl = "https://via.placeholder.com/300"
     )
 
