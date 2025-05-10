@@ -7,14 +7,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -31,6 +34,7 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
     var description by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var artesao by remember { mutableStateOf("") }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -40,24 +44,36 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
 
     Scaffold(
         topBar = {
-            TopAppBar(title = {
-                Text("Cadastrar Produto")
-            })
+            CenterAlignedTopAppBar(
+                title = { Text("IndigiPlace", style = MaterialTheme.typography.titleLarge) },
+                colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0XFF452A19),
+                    titleContentColor = Color(0xFFF4ECDC)
+                )
+            )
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding).padding(16.dp)
         )
         {
-
+            Text("ADICIONE SEU PRODUTO", style = MaterialTheme.typography.titleLarge, color = Color(0XFF452A19), modifier = Modifier.fillMaxWidth())
             OutlinedTextField(value = title, onValueChange = { title = it }, label = { Text("Título") }, modifier = Modifier.fillMaxWidth())
             OutlinedTextField(value = price, onValueChange = { price = it }, label = { Text("Preço") }, modifier = Modifier.fillMaxWidth())
             OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Descrição") }, modifier = Modifier.fillMaxWidth())
             OutlinedTextField(value = category, onValueChange = { category = it }, label = { Text("Categoria") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(value = artesao, onValueChange = { artesao = it }, label = { Text("Id Do Artesão") }, modifier = Modifier.fillMaxWidth())
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Button(onClick = { launcher.launch("image/*") }) {
+                Button(
+                    onClick = { launcher.launch("image/*") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0XFF452A19),
+                        contentColor = Color.White
+                    )
+                ) {
                     Text("Selecionar Imagem")
                 }
             }
@@ -74,19 +90,24 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
             Spacer(modifier = Modifier.height(16.dp))
 
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Button(onClick = {
-                    viewModel.addProduct(
-                        Product(
-                            id = 0,
-                            title = title,
-                            price = price.toDoubleOrNull() ?: 0.0,
-                            category = category,
-                            description = description,
-                            imageUrl = imageUri.toString() // salva URI como String
+                Button(
+                    onClick = {
+                        viewModel.addProduct(
+                            Product(
+                                id = 0,
+                                title = title,
+                                price = price.toDoubleOrNull() ?: 0.0,
+                                category = category,
+                                description = description,
+                                imageUrl = imageUri.toString() // salva URI como String
+                            )
                         )
-                    )
-                    navController.popBackStack()
-                }) {
+                        navController.popBackStack()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0XFF452A19),
+                        contentColor = Color.White
+                    )) {
                     Text("Cadastrar Produto")
                 }
             }
