@@ -1,7 +1,7 @@
 package com.multcult.indigiplace.model
 
 data class Product(
-    val id: Int = 0,
+    val id: Int,
     val title: String,
     val category: String,
     val price: Double,

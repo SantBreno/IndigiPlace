@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
@@ -113,8 +114,8 @@ fun HomeScreenContent(
 
                 items(filteredProducts) { product ->
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
-                        border = BorderStroke(2.dp, Color(0XFF452A19)),
+                        colors = CardDefaults.cardColors(containerColor = Color(0XFF452A19)),
+                        border = BorderStroke(2.dp, Color.White),
                         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -131,13 +132,14 @@ fun HomeScreenContent(
                             )
                             Spacer(modifier = Modifier.width(16.dp))
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(product.title, style = MaterialTheme.typography.titleMedium)
-                                Text(product.category, style = MaterialTheme.typography.bodySmall)
+                                Text(product.title, style = MaterialTheme.typography.titleMedium, color = Color.White)
+                                Text(product.category, style = MaterialTheme.typography.bodySmall, color = Color.White)
                             }
                             Text(
                                 "R$ ${product.price}",
                                 style = MaterialTheme.typography.labelLarge,
-                                modifier = Modifier.align(Alignment.CenterVertically)
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                color = Color.White
                             )
                         }
                     }
@@ -187,6 +189,35 @@ fun CategorySelector(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    val sampleProducts = listOf(
+        Product(
+            id = 1,
+            title = "Colar Artesanal",
+            category = "Acessório",
+            price = 59.90,
+            description = "Colar artesanal feito com amor e cuidado",
+            imageUrl = "https://via.placeholder.com/150"
+        ),
+        Product(
+            id = 2,
+            title = "Camiseta Estampada",
+            category = "Roupas",
+            price = 89.90,
+            description = "Camiseta limpa clara",
+            imageUrl = "https://via.placeholder.com/150"
+        )
+    )
+
+    HomeScreenContent(
+        productList = sampleProducts,
+        onProductClick = {},
+        onAddClick = {}
+    )
 }
 
 
