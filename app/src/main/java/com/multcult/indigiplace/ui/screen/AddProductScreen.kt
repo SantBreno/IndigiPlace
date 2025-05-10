@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,23 +39,28 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Cadastrar Produto") }) }
+        topBar = {
+            TopAppBar(title = {
+                Text("Cadastrar Produto")
+            })
+        }
     ) { innerPadding ->
-        Column(modifier = Modifier
-            .padding(innerPadding)
-            .padding(16.dp)) {
+        Column(modifier = Modifier.padding(innerPadding).padding(16.dp)
+        )
+        {
 
-            OutlinedTextField(value = title, onValueChange = { title = it }, label = { Text("Título") })
-            OutlinedTextField(value = price, onValueChange = { price = it }, label = { Text("Preço") })
-            OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Descrição") })
-            OutlinedTextField(value = category, onValueChange = { category = it }, label = { Text("Categoria") })
+            OutlinedTextField(value = title, onValueChange = { title = it }, label = { Text("Título") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(value = price, onValueChange = { price = it }, label = { Text("Preço") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Descrição") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(value = category, onValueChange = { category = it }, label = { Text("Categoria") }, modifier = Modifier.fillMaxWidth())
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = { launcher.launch("image/*") }) {
-                Text("Selecionar Imagem")
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                Button(onClick = { launcher.launch("image/*") }) {
+                    Text("Selecionar Imagem")
+                }
             }
-
             imageUri?.let {
                 Image(
                     painter = rememberAsyncImagePainter(it),
@@ -65,24 +71,27 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
                         .padding(top = 8.dp)
                 )
             }
-
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = {
-                viewModel.addProduct(
-                    Product(
-                        id = 0,
-                        title = title,
-                        price = price.toDoubleOrNull() ?: 0.0,
-                        category = category,
-                        description = description,
-                        imageUrl = imageUri.toString() // salva URI como String
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                Button(onClick = {
+                    viewModel.addProduct(
+                        Product(
+                            id = 0,
+                            title = title,
+                            price = price.toDoubleOrNull() ?: 0.0,
+                            category = category,
+                            description = description,
+                            imageUrl = imageUri.toString() // salva URI como String
+                        )
                     )
-                )
-                navController.popBackStack()
-            }) {
-                Text("Cadastrar Produto")
+                    navController.popBackStack()
+                }) {
+                    Text("Cadastrar Produto")
+                }
             }
+
+
         }
     }
 }
