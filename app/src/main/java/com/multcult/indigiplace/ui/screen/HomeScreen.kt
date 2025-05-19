@@ -45,11 +45,19 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.multcult.indigiplace.model.Product
 import com.multcult.indigiplace.viewmodel.ProductViewModel
+import com.multcult.indigiplace.viewmodel.AuthViewModel
+import androidx.compose.runtime.livedata.observeAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController, productViewModel: ProductViewModel) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    productViewModel: ProductViewModel,
+    authViewModel: AuthViewModel
+) {
     val productList = productViewModel.productList
+    val authState = authViewModel.authState.observeAsState()
 
     HomeScreenContent(
         productList = productList,

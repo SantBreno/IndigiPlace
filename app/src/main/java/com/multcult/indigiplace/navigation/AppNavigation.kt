@@ -23,7 +23,7 @@ fun AppNavigation(modifier : Modifier = Modifier, authViewModel: AuthViewModel) 
             SignUpScreen(navController, authViewModel)
         }
         composable("home") {
-            HomeScreen(modifier, navController, productViewModel)
+            HomeScreen(modifier, navController, productViewModel, authViewModel)
         }
         composable("details/{productId}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
