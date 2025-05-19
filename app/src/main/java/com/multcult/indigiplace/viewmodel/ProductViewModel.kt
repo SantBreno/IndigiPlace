@@ -7,6 +7,7 @@ import com.multcult.indigiplace.model.Product
 open class ProductViewModel : ViewModel() {
     private var nextId = 1
     val productList = mutableStateListOf<Product>()
+    var category = mutableStateListOf("")
 
     fun addProduct(product: Product) {
         productList.add(product.copy(id = nextId++))

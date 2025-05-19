@@ -15,10 +15,10 @@ class AuthViewModel : ViewModel() {
         checkAuthState()
     }
 
-    fun checkAuthState() {
-        if (auth.currentUser == null) {
+    fun checkAuthState(){
+        if(auth.currentUser==null){
             _authState.value = AuthState.Authenticated
-        } else {
+        }else{
             _authState.value = AuthState.Unauthenticated
         }
     }

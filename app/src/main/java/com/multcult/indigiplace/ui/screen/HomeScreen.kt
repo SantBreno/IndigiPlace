@@ -93,7 +93,8 @@ fun HomeScreenContent(
             FloatingActionButton(onClick = onAddClick) {
                 Text("+")
             }
-        }
+        },
+        modifier = Modifier.background(Color(0xFFF4ECDC))
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -122,9 +123,10 @@ fun HomeScreenContent(
 
                 items(filteredProducts) { product ->
                     Card(
+                        shape = RoundedCornerShape(12.dp),
                         colors = CardDefaults.cardColors(containerColor = Color(0XFF452A19)),
                         border = BorderStroke(2.dp, Color.White),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 8.dp)
@@ -135,17 +137,17 @@ fun HomeScreenContent(
                                 painter = rememberAsyncImagePainter(product.imageUrl),
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .size(60.dp)
+                                    .size(80.dp)
                                     .clip(RoundedCornerShape(16.dp))
                             )
                             Spacer(modifier = Modifier.width(16.dp))
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(product.title, style = MaterialTheme.typography.titleMedium, color = Color.White)
-                                Text(product.category, style = MaterialTheme.typography.bodySmall, color = Color.White)
+                                Text(product.title, style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold), color = Color.White)
+                                Text(product.category, style = MaterialTheme.typography.bodyMedium, color = Color.White)
                             }
                             Text(
                                 "R$ ${product.price}",
-                                style = MaterialTheme.typography.labelLarge,
+                                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                                 modifier = Modifier.align(Alignment.CenterVertically),
                                 color = Color.White
                             )

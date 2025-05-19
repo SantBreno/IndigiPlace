@@ -9,9 +9,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -42,6 +47,10 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
         imageUri = uri
     }
 
+    val categories = listOf("Arte", "Acessório", "Decoração", "Roupas", "Alimentos")
+
+    var categoryExpanded by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -60,7 +69,42 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
             OutlinedTextField(value = title, onValueChange = { title = it }, label = { Text("Título") }, modifier = Modifier.fillMaxWidth())
             OutlinedTextField(value = price, onValueChange = { price = it }, label = { Text("Preço") }, modifier = Modifier.fillMaxWidth())
             OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Descrição") }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(value = category, onValueChange = { category = it }, label = { Text("Categoria") }, modifier = Modifier.fillMaxWidth())
+            ExposedDropdownMenuBox(
+                expanded = categoryExpanded,
+                onExpandedChange = { categoryExpanded = !categoryExpanded },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = category,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Categoria") },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF1B213F),
+                        unfocusedBorderColor = Color(0xFF1B213F),
+                    ),
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoryExpanded) },
+                    modifier = Modifier
+                        .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                        .fillMaxWidth()
+                )
+                ExposedDropdownMenu(
+                    expanded = categoryExpanded,
+                    onDismissRequest = { categoryExpanded = false }
+                ) {
+                    categories.forEach { selection ->
+                        DropdownMenuItem(
+                            text = { Text(selection) },
+                            onClick = {
+                                category= selection
+                                categoryExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+
             OutlinedTextField(value = artesao, onValueChange = { artesao = it }, label = { Text("Id Do Artesão") }, modifier = Modifier.fillMaxWidth())
 
 
@@ -77,16 +121,7 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
                     Text("Selecionar Imagem")
                 }
             }
-            imageUri?.let {
-                Image(
-                    painter = rememberAsyncImagePainter(it),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .padding(top = 8.dp)
-                )
-            }
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -110,6 +145,16 @@ fun AddProductScreen(navController: NavController, viewModel: ProductViewModel) 
                     )) {
                     Text("Cadastrar Produto")
                 }
+            }
+            imageUri?.let {
+                Image(
+                    painter = rememberAsyncImagePainter(it),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .padding(top = 8.dp)
+                )
             }
 
 
