@@ -6,11 +6,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -183,16 +187,54 @@ fun HomeScreenContent(
 
 @Composable
 fun BannerSection() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        BannerCard(
+            title = "Bem-vindo",
+            description = "Encontre produtos e apoie os povos originários comprando produtos autênticos e de qualidade."
+        )
+        BannerCard(
+            title = "Sobre o Projeto",
+            description = "IndigiPlace conecta artesãos indígenas diretamente aos consumidores, promovendo cultura e sustentabilidade."
+        )
+        BannerCard(
+            title = "Nosso Impacto",
+            description = "Cada compra fortalece comunidades, gera renda e preserva tradições culturais dos povos originários."
+        )
+    }
+}
+
+@Composable
+fun BannerCard(
+    title: String,
+    description: String
+) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .width(250.dp)
+            .height(IntrinsicSize.Min),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFDDEBF7))
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text("Bem-Vindo", style = MaterialTheme.typography.titleLarge)
-            Text("Encontre produtos e apoie os povos originários comprando produtos autênticos e de qualidade.")
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxHeight()
+        ) {
+            Text(
+                title,
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                description,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
