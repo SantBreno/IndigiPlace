@@ -11,11 +11,14 @@ import com.multcult.indigiplace.viewmodel.AuthViewModel
 import com.multcult.indigiplace.viewmodel.ProductViewModel
 
 @Composable
-fun AppNavigation(modifier : Modifier = Modifier, authViewModel: AuthViewModel) {
+fun AppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
     val navController = rememberNavController()
     val productViewModel: ProductViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = "sign_in", builder = {
+    NavHost(
+        navController = navController,
+        startDestination = "sign_in"
+    ) {
         composable("sign_in") {
             SignInScreen(navController, authViewModel)
         }
@@ -28,12 +31,26 @@ fun AppNavigation(modifier : Modifier = Modifier, authViewModel: AuthViewModel) 
         composable("details/{productId}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
             id?.let {
-                ProductDetailScreen(productId = it, viewModel = productViewModel)
+                ProductDetailScreen(
+                    productId = it,
+                    viewModel = productViewModel,
+                    navController = navController
+                )
             }
         }
         composable("add") {
             AddProductScreen(navController, productViewModel)
         }
-    } )
-}
+        composable("checkout/{productId}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
+            val product = id?.let { productViewModel.getProductById(it) }
 
+            if (product != null) {
+                CheckoutScreen(
+                    navController = navController,
+                    product = product
+                )
+            }
+        }
+    }
+}
