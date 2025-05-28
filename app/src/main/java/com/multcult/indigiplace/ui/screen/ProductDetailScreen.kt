@@ -25,6 +25,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -109,6 +110,11 @@ fun ProductDetailScreen(
                         modifier = Modifier.size(24.dp)
                     )
                 }
+            }
+            TextButton(onClick = {
+                navController.navigate("profile")
+            }) {
+                Text(text = "Aldeia Artesanato")
             }
 
             Spacer(modifier = Modifier.height(8.dp))

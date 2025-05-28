@@ -3,7 +3,6 @@ package com.multcult.indigiplace.ui.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -36,10 +35,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -53,9 +52,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.multcult.indigiplace.model.Product
-import com.multcult.indigiplace.viewmodel.ProductViewModel
 import com.multcult.indigiplace.viewmodel.AuthViewModel
-import androidx.compose.runtime.livedata.observeAsState
+import com.multcult.indigiplace.viewmodel.ProductViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -142,8 +140,8 @@ fun HomeScreenContent(
                 items(filteredProducts) { product ->
                     Card(
                         shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0XFFd07430)),
-                        border = BorderStroke(2.dp, Color.White),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                        border = BorderStroke(2.dp, Color(0XFFd07430)),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -163,19 +161,19 @@ fun HomeScreenContent(
                                 Text(
                                     product.title,
                                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                                    color = Color.White
+                                    color = Color.Black
                                 )
                                 Text(
                                     product.category,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = Color.White
+                                    color = Color.Black
                                 )
                             }
                             Text(
                                 "R$ ${product.price}",
                                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                                 modifier = Modifier.align(Alignment.CenterVertically),
-                                color = Color.White
+                                color = Color.Black
                             )
                         }
                     }

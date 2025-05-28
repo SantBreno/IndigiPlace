@@ -52,5 +52,8 @@ fun AppNavigation(modifier: Modifier = Modifier, authViewModel: AuthViewModel) {
                 )
             }
         }
+        composable("profile") {
+            ProfileScreen(navController)
+        }
     }
 }
